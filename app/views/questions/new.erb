@@ -1,21 +1,14 @@
 <% if logged_in? %>
+	<button><a href='/'>Home</button>
+	<button><a href='/user'>Profile</button>
+	<button><a href='/user/signout'>Sign Out</a></button>
+
 	<form method="post" action="/question">
 		<input type=text placeholder="Category" name="question[category]"><br>
 		<input type=text placeholder="Question" name="question[question_details]"><br>
 		<input type=submit value="Submit">
 	</form>
 	<p><%= @question.errors.messages if @question %></p>
-<% end %>
-
-<% if @questions %>
-	<% loop = 1 %>
-	<% @questions.each do |q| %>
-		<div>
-			<p> <%= loop %> </p>
-			<a href="/question/<%= q.id %>" ><%= q.question_details %> </a>
-			<p> <%= q.category %> </p>
-			<p> <%= User.find(q.user_id).full_name %> </p>
-			<% loop += 1 %>
-		</div>
-	<% end %>
+<% else %>
+	<p>Please Login</p>
 <% end %>

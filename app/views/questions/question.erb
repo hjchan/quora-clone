@@ -1,0 +1,20 @@
+<div>
+	<p> <%= @question.question_details %> </p>
+	<p> <%= @question.category %> </p>
+	<p> <%= User.find(@question.user_id).full_name %> </p>
+	<% if @question.answers %>
+		<% loop = 1 %>
+		<% @question.answers.each do |ans| %>
+			<div>
+				<p> <%= loop %> </p>
+				<p> <%= ans.answer_details %> </p>
+				<p> <%= User.find(ans.user_id).full_name %> </p>
+				<% loop += 1 %>
+			</div>
+		<% end %>
+	<% end %>
+	<form method="post" action="/question/<%= @question.id %>">
+		<input type=text placeholder="Answer" name="answer">
+		<input type=submit value="lSubmit">
+	</form>
+</div>

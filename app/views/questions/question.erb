@@ -1,7 +1,12 @@
 <div>
+	<p> Title: <%= @question.title %> </p>	
+	<p> Category: <%= @question.category %> </p>
 	<p> <%= @question.question_details %> </p>
-	<p> <%= @question.category %> </p>
-	<p> <%= User.find(@question.user_id).full_name %> </p>
+	<p> Posted by: <%= User.find(@question.user_id).full_name %> </p>
+		<form method="post" action="/questions/<%= @question.id %>/answers">
+		<input type=text placeholder="Answer" name="answer">
+		<input type=submit value="Submit">
+	</form>
 	<% if @question.answers %>
 		<% loop = 1 %>
 		<% @question.answers.each do |ans| %>
@@ -13,8 +18,4 @@
 			</div>
 		<% end %>
 	<% end %>
-	<form method="post" action="/question/<%= @question.id %>">
-		<input type=text placeholder="Answer" name="answer">
-		<input type=submit value="lSubmit">
-	</form>
 </div>

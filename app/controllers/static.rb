@@ -5,15 +5,16 @@ end
 
 ### User
 
-get '/user/new' do
+get '/users/new' do
   	erb :"users/signup"
 end
 
-get '/user' do
-	erb :"users/profile"
+get '/users' do
+	@users = User.all
+	erb :"users/index"
 end
 
-post '/user' do
+post '/users' do
 	user = User.new(params[:user])
 	if user.save
 		session[:id] = user.id
@@ -24,62 +25,65 @@ post '/user' do
 	end
 end
 
-get '/user/signin' do
+get '/users/signin' do
 	erb :"users/signin"
 end
 
-post '/user/signin' do
-	user = User.find_by(email: params[:email])
+post '/users/signin' do
+user = User.find_by(email: params[:email])
 	if user.nil?
 		@error = "Wrong email!"
 		erb :"users/signin"
 	else
-		login = user.authenticate(params[:password])
-		if login == false
+		if !user.authenticate(params[:password])
 			@error = "Wrong password!"
 			erb :"users/signin"
 		else
 			session[:id] = user.id
-			redirect "/user"
+			redirect "/users/#{session[:id]}"
 		end
 	end
 end
 
-get '/user/signout' do
-	session.clear
+get '/users/signout' do
+	session[:id] = nil
 	redirect '/'
+end
+
+get '/users/:id' do
+	@user = User.find(params[:id])
+	erb :"users/profile"
 end
 
 ### Question
 
-get '/question' do
+get '/questions' do
 	@questions = Question.all
 	erb :"questions/index"
 end
 
-get '/question/new' do
+get '/questions/new' do
 	erb :"questions/new"
 end
 
-post '/question' do
+post '/questions' do
 	params[:question][:user_id] = session[:id]
 	question = Question.new(params[:question])
 	if question.save
-		redirect "/question"
+		redirect "/questions"
 	else
 		@question = question
 		erb :"/"
 	end
 end
 
-get '/question/:id' do
+get '/questions/:id' do
 	@question = Question.find(params[:id])
 	erb :"questions/question"
 end
 
-post '/question/:id' do
+post '/questions/:id/answers' do
 	answer = Answer.new(question_id: params[:id], user_id: session[:id], answer_details: params[:answer])
 	answer.save
-	@question = Question.find(params[:id])
-	erb :"questions/question"
+	redirect "/questions/#{params[:id]}"
 end

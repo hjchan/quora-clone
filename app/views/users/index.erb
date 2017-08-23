@@ -1,0 +1,11 @@
+<% if @users %>
+	<% loop = 1 %>
+	<% @users.each do |user| %>
+		<div>
+			<p> <%= loop %> </p>
+			<a href="/users/<%= user.id %>" ><%= user.full_name %> </a>
+			<p> <%= user.email %> </p>
+			<% loop += 1 %>
+		</div>
+	<% end %>
+<% end %>

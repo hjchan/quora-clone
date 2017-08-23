@@ -1,10 +1,14 @@
 <% if logged_in? %>
-	<p>Welcome <%= current_user.full_name %> </p>
-	<p>Email: <%= current_user.email %> </p>
+	<% if current_user.id == @user.id %>
+		<p>Welcome <%= @user.full_name %> </p>
+	<% else %>
+		<p>Name: <%=@user.full_name %></p>
+	<% end %>
+	<p>Email: <%= @user.email %> </p>
 
-	<% questions = current_user.questions %>
+	<% questions = @user.questions %>
 	<% if !(questions.empty?) %>
-		<p> Your Submitted Question </p>
+		<p> Submitted Question </p>
 		<% loop = 1 %>
 		<% questions.each do |q| %>
 			<div>
@@ -16,9 +20,9 @@
 		<% end %>
 	<% end %>
 
-	<% answers = current_user.answers %>
+	<% answers = @user.answers %>
 	<% if !(answers.empty?) %>
-		<p> Your Submitted Answers </p>
+		<p> Submitted Answers </p>
 		<% loop = 1 %>
 		<% answers.each do |ans| %>
 			<div>

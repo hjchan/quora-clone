@@ -1,5 +1,5 @@
 <h2>Sign up for an account!</h2>
-<form method="post" action="/user">
+<form method="post" action="/users">
 	<input type=text placeholder="Full Name" name="user[full_name]" value="<%= params[:user][:full_name] if (params[:user]!=nil) %>"><br>
 	<input type=text placeholder="Email" name="user[email]" value="<%= params[:user][:email] if (params[:user]!=nil)%>"><br>
 	<input type=password placeholder="Password" name="user[password]" value="<%= params[:user][:password] if (params[:user]!=nil)%>"><br>

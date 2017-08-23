@@ -1,9 +1,6 @@
 <% if logged_in? %>
-	<button><a href='/'>Home</button>
-	<button><a href='/user'>Profile</button>
-	<button><a href='/user/signout'>Sign Out</a></button>
-
-	<form method="post" action="/question">
+	<form method="post" action="/questions">
+    <input type=text placeholder="Title" name="question[title]"><br>
 		<input type=text placeholder="Category" name="question[category]"><br>
 		<input type=text placeholder="Question" name="question[question_details]"><br>
 		<input type=submit value="Submit">

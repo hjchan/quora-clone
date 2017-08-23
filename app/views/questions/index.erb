@@ -3,9 +3,10 @@
 	<% @questions.each do |q| %>
 		<div>
 			<p> <%= loop %> </p>
-			<a href="/question/<%= q.id %>" ><%= q.question_details %> </a>
-			<p> <%= q.category %> </p>
-			<p> <%= User.find(q.user_id).full_name %> </p>
+			<a href="/questions/<%= q.id %>" >Title: <%= q.title %> </a>
+      <p> <%= q.question_details %> </p> 
+			<p> category: <%= q.category %> </p>
+			<p> Posted by: <%= User.find(q.user_id).full_name %> </p>
 			<% loop += 1 %>
 		</div>
 	<% end %>

@@ -1,10 +1,36 @@
 <% if logged_in? %>
 	<p>Welcome <%= current_user.full_name %> </p>
 	<p>Email: <%= current_user.email %> </p>
-	<button><a href='/user/signout'>Sign Out</a></button>
+
+	<% questions = current_user.questions %>
+	<% if !(questions.empty?) %>
+		<p> Your Submitted Question </p>
+		<% loop = 1 %>
+		<% questions.each do |q| %>
+			<div>
+				<p> <%= loop %> </p>
+				<p> <%= q.question_details %> </p>
+				<p> <%= q.category %> </p>
+				<% loop += 1 %>
+			</div>
+		<% end %>
+	<% end %>
+
+	<% answers = current_user.answers %>
+	<% if !(answers.empty?) %>
+		<p> Your Submitted Answers </p>
+		<% loop = 1 %>
+		<% answers.each do |ans| %>
+			<div>
+				<p> <%= loop %> </p>
+				<p> <%= Question.find(ans.question_id).question_details %> </p>
+				<p> <%= ans.answer_details %> </p>
+				<% loop += 1 %>
+			</div>
+		<% end %>
+	<% end %>
+
+
 <% else %>
 	<p>You are not logged in</p>
-	<button><a href='/'>Home</a></button>
-	<button><a href='/user/signin'>Sign In</a></button>
-	<button><a href='/user/new'>Sign Up</a></button>
 <% end %>

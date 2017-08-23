@@ -1,9 +1,16 @@
 get '/' do
+	@questions = Question.all
   	erb :"static/index"
 end
 
+### User
+
 get '/user/new' do
   	erb :"users/signup"
+end
+
+get '/user' do
+	erb :"users/profile"
 end
 
 post '/user' do
@@ -43,6 +50,36 @@ get '/user/signout' do
 	redirect '/'
 end
 
-get '/user' do
-	erb :"users/profile"
+### Question
+
+get '/question' do
+	@questions = Question.all
+	erb :"questions/index"
+end
+
+get '/question/new' do
+	erb :"questions/new"
+end
+
+post '/question' do
+	params[:question][:user_id] = session[:id]
+	question = Question.new(params[:question])
+	if question.save
+		redirect "/question"
+	else
+		@question = question
+		erb :"/"
+	end
+end
+
+get '/question/:id' do
+	@question = Question.find(params[:id])
+	erb :"questions/question"
+end
+
+post '/question/:id' do
+	answer = Answer.new(question_id: params[:id], user_id: session[:id], answer_details: params[:answer])
+	answer.save
+	@question = Question.find(params[:id])
+	erb :"questions/question"
 end

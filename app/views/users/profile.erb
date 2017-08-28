@@ -1,40 +1,67 @@
-<% if logged_in? %>
-	<% if current_user.id == @user.id %>
-		<p>Welcome <%= @user.full_name %> </p>
-	<% else %>
-		<p>Name: <%=@user.full_name %></p>
-	<% end %>
-	<p>Email: <%= @user.email %> </p>
-
-	<% questions = @user.questions %>
-	<% if !(questions.empty?) %>
-		<p> Submitted Question </p>
-		<% loop = 1 %>
-		<% questions.each do |q| %>
-			<div>
-				<p> <%= loop %> </p>
-				<p> <%= q.question_details %> </p>
-				<p> <%= q.category %> </p>
-				<% loop += 1 %>
-			</div>
-		<% end %>
-	<% end %>
-
-	<% answers = @user.answers %>
-	<% if !(answers.empty?) %>
-		<p> Submitted Answers </p>
-		<% loop = 1 %>
-		<% answers.each do |ans| %>
-			<div>
-				<p> <%= loop %> </p>
-				<p> <%= Question.find(ans.question_id).question_details %> </p>
-				<p> <%= ans.answer_details %> </p>
-				<% loop += 1 %>
-			</div>
-		<% end %>
-	<% end %>
-
-
+<% if (logged_in?) && (current_user.id == @user.id) %>
+	<h5>Welcome <%= @user.full_name %> </h5>
 <% else %>
-	<p>You are not logged in</p>
+	<h5>Name: <%=@user.full_name %></h5>
+<% end %>
+<h5>Email: <%= @user.email %> </h5>
+<div style="height:20px; width:100%; clear:both;"></div>
+
+<% @questions = @user.questions %>
+<% if !(@questions.empty?) %>
+	<h5> Submitted Question </h5>
+	<div style="height:20px; width:100%; clear:both;"></div>
+	<%= erb :"questions/index", layout: false %>
+<% end %>
+
+<div style="height:20px; width:100%; clear:both;"></div>
+
+<% answers = @user.answers %>
+<% if !(answers.empty?) %>
+	<h5> Submitted Answers </h5>
+	<div style="height:20px; width:100%; clear:both;"></div>
+	<% answers.each do |ans| %>
+		<div class="card">
+			<div class="card-header">
+				<% q=Question.find(ans.question_id) %>
+				<h5 class="card-title"><a href="/questions/<%= q.id %>"><%= q.title %></a></h5>
+			</div>
+			<div class="card-body">
+				<p><%= ans.answer_details %> </p>
+				<% if logged_in? %>
+		      <% a_vote = AnswerVote.find_by(answer_id: ans.id, user_id: current_user.id) %> 
+		    <% else %>
+		      <% a_vote = false %>
+		    <% end %>
+				<div class="w-100"></div>
+				<div class="row answer-vote-row">
+					<div class="col col-md-auto card <%="border-primary" if (a_vote) && (a_vote.upvote)%>">
+						<div class="row vote-button">
+							<div class="col">
+								<a class="a-upvote" href="#">
+					      	<img id="vote-img" src="/img/like.svg" data-qid="<%= ans.id %>" width="25" height="25" role="button" aria-pressed="<%=a_vote.upvote if a_vote%>">
+					      </a>
+				      </div>
+				      <div class="col">
+					      <h4 id="a-upvote-count-<%=ans.id%>"><%= AnswerVote.where(answer_id: ans.id, upvote: true).count %></h4>
+				      </div>
+			      </div>
+		      </div>
+
+		      <div class="col col-md-auto card <%="border-primary" if (a_vote) && (a_vote.downvote)%>">
+						<div class="row vote-button">
+							<div class="col">
+								<a class="a-downvote" href="#">
+					      	<img id="vote-img" src="/img/dislike.svg" data-qid="<%= ans.id %>" width="25" height="25" role="button" aria-pressed="<%=a_vote.downvote if a_vote%>">
+					      </a>
+				      </div>
+				      <div class="col">
+					      <h4 id="a-downvote-count-<%=ans.id%>"><%= AnswerVote.where(answer_id: ans.id, downvote: true).count %></h4>
+				      </div>
+			      </div>
+		    	</div>
+		  	</div>
+			</div>
+		</div>
+		<div style="height:20px; width:100%; clear:both;"></div>
+	<% end %>
 <% end %>

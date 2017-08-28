@@ -1,8 +1,8 @@
 <h2>Login</h2>
-<form method=post action=/users/signin>
-    <input type=text placeholder="Email" name="email" value="<%= params[:email] %>"><br>
-    <input type=password placeholder="Password" name="password" value="<%= params[:password] %>"></br>
+<form id="sign-in-form" method=post action=/users/signin>
+    <input type=text placeholder="Email" name="email"><br>
+    <input type=password placeholder="Password" name="password"></br>
     <input type=submit value="Login">
 </form>
 
-<p><%= @error if @error %></p>
+<p id="error"></p>

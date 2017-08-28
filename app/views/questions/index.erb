@@ -1,13 +1,57 @@
+<% if @category %>
+	<h5>Category: <%=@category %></h5>	
+	<hr/>
+<% end %>
 <% if @questions %>
-	<% loop = 1 %>
 	<% @questions.each do |q| %>
-		<div>
-			<p> <%= loop %> </p>
-			<a href="/questions/<%= q.id %>" >Title: <%= q.title %> </a>
-      <p> <%= q.question_details %> </p> 
-			<p> category: <%= q.category %> </p>
-			<p> Posted by: <%= User.find(q.user_id).full_name %> </p>
-			<% loop += 1 %>
+		<div class="card">
+			<div class="card-header">
+				<h5 class="card-title"><a href="/questions/<%= q.id %>" ><%= q.title %> </a></h5>
+			</div>
+			<div class="card-body">
+				<div class="row question-body">
+					<div class="col">
+						<h6 class="card-subtitle mb-2 text-muted">Category: <a href="questions/category/<%=q.category%>" ><%= q.category %> </a></h6>
+					</div>
+					<div class="col">
+						<h6 class="card-subtitle mb-2 text-muted">Posted by: <a href="/users/<%= User.find(q.user_id).id %>"><%= User.find(q.user_id).full_name %></a></h6>
+					</div>
+					<div class="w-100"></div>
+		      <p> <%= q.question_details %> </p>
+		      <% if logged_in? %>
+			      <% q_vote = QuestionVote.find_by(question_id: q.id, user_id: current_user.id) %> 
+		      <% else %>
+			      <% q_vote = false %>
+		      <% end %>
+					<div class="w-100"></div>
+					<div class="col col-md-auto card <%="border-primary" if (q_vote) && (q_vote.upvote)%>">
+						<div class="row vote-button">
+							<div class="col">
+								<a class="upvote" href="#">
+					      	<img id="vote-img" src="/img/like.svg" data-qid="<%= q.id %>" width="25" height="25" role="button" aria-pressed="<%=q_vote.upvote if q_vote%>">
+					      </a>
+				      </div>
+				      <div class="col">
+					      <h4 id="upvote-count-<%=q.id%>"><%= QuestionVote.where(question_id: q.id, upvote: true).count %></h4>
+				      </div>
+			      </div>
+		      </div>
+
+		      <div class="col col-md-auto card <%="border-primary" if (q_vote) && (q_vote.downvote)%>">
+						<div class="row vote-button">
+							<div class="col">
+								<a class="downvote" href="#">
+					      	<img id="vote-img" src="/img/dislike.svg" data-qid="<%= q.id %>" width="25" height="25" role="button" aria-pressed="<%=q_vote.downvote if q_vote%>">
+					      </a>
+				      </div>
+				      <div class="col">
+					      <h4 id="downvote-count-<%=q.id%>"><%= QuestionVote.where(question_id: q.id, downvote: true).count %></h4>
+				      </div>
+			      </div>
+	      	</div>
+				</div>
+			</div>
 		</div>
+		<div style="height:20px; width:100%; clear:both;"></div>
 	<% end %>
 <% end %>

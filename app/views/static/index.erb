@@ -1,23 +1,26 @@
 <% if logged_in? %>
 	<form method="post" action="/questions">
-		<input type=text placeholder="Title" name="question[title]"><br>
-		<input type=text placeholder="Category" name="question[category]"><br>
-		<input type=text placeholder="Question" name="question[question_details]"><br>
-		<input type=submit value="Submit">
-	</form>
+    <div class="card">
+      <div class="form-row">
+        <div class="col-10 right-form">
+          <input type=text class="form-control" placeholder="Title" name="question[title]">
+        </div>
+        <div class="col-2 left-form">
+          <select class="custom-select" name="question[category]" placeholder="Category">
+            <option selected>Category</option>
+            <option>Lifestyle</option>
+            <option>Education</option>
+            <option>Bullshit</option>
+          </select>
+        </div>
+      </div>
+      <textarea input type=text placeholder="Ask a Question" name="question[question_details]" class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+      <div class="card-footer">
+        <button class="btn btn-primary" type=submit style="float: right;">Submit</button>   
+      </div>
+    </div>
+  </form>
 	<p><%= @question.errors.messages if @question %></p>
 <% end %>
 
-<% if @questions %>
-	<% loop = 1 %>
-	<% @questions.each do |q| %>
-		<div>
-			<p> <%= loop %> </p>
-			<a href="/questions/<%= q.id %>" >Title: <%= q.title %> </a>
-      <p> <%= q.question_details %> </p> 
-			<p> Category: <%= q.category %> </p>
-			<p> Posted by: <%= User.find(q.user_id).full_name %> </p>
-			<% loop += 1 %>
-		</div>
-	<% end %>
-<% end %>
+<%= erb :"questions/index", layout: false %>

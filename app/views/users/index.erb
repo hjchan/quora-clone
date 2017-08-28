@@ -1,11 +1,22 @@
 <% if @users %>
-	<% loop = 1 %>
-	<% @users.each do |user| %>
-		<div>
-			<p> <%= loop %> </p>
-			<a href="/users/<%= user.id %>" ><%= user.full_name %> </a>
-			<p> <%= user.email %> </p>
-			<% loop += 1 %>
-		</div>
-	<% end %>
+  <table class="table table-hover">
+    <thead class="thead-default">
+      <tr>
+        <th>#</th>
+        <th>Full Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+  	<% loop = 1 %>
+  	<% @users.each do |user| %>
+  		<tr>
+  			<th scope="row"> <%= loop %> </th>
+  			<td><a href="/users/<%= user.id %>" ><%= user.full_name %> </a></td>
+  			<td> <%= user.email %> </td>
+  			<% loop += 1 %>
+  		</tr>
+  	<% end %>
+    </tbody>
+  </table>
 <% end %>

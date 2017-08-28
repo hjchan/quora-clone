@@ -1,8 +1,55 @@
+.answer-vote-row {
+  margin: 0;
+}
+
 body { 
 	padding-top: 70px; 
 }	
 
-.dropdown-menu{
-	left: initial;
-	right: 0;
+.dropdown-right {
+  left: initial;
+  right: 0;
+}
+
+.col{
+  padding-left: 0;
+}
+
+.vote-button{
+  padding-left: 1.25rem;
+}
+
+.vote-height{
+  height: 40px;
+}
+
+.card-footer{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+div.card div.right-form {
+  padding-right: 0;
+}
+
+div.card div.left-form {
+  padding-left: 0;
+}
+
+.custom-select {
+  width: 100%;
+}
+
+.question-body {
+  margin-left: 0;
+  margin-right: 0;
 }

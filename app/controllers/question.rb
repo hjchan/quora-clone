@@ -1,7 +1,5 @@
 ### Question
 
-require 'byebug'
-
 get '/questions' do
   @questions = Question.paginate(page: params[:page])
   erb :"questions/index"

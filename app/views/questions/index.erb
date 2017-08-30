@@ -32,7 +32,8 @@
 		      <% else %>
 			      <% q_vote = false %>
 		      <% end %>
-					<div class="w-100"></div>
+		      <% if logged_in? %>
+				<div class="w-100"></div>
 					<div class="col col-md-auto card <%="border-primary" if (q_vote) && (q_vote.upvote)%>">
 						<div class="row vote-button">
 							<div class="col">
@@ -58,7 +59,8 @@
 				      </div>
 			      </div>
 	      	</div>
-				</div>
+	      	<% end %>	
+			</div>
 			</div>
 		</div>
 		<div style="height:20px; width:100%; clear:both;"></div>

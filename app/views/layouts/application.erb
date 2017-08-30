@@ -10,10 +10,12 @@
 		<link rel="stylesheet" href="/css/application.css">
 		<script type="text/javascript" src="/js/application.js"></script>
 		<title>Sinatra Framework</title>
+			<script type="text/javascript">$('#loginModal').modal('show');</script>
+			<script>$('#loginModal').modal('show')</script>
 	</head>
 
 	<body>
-		<nav class="navbar fixed-top navbar-light" style="background-color: #ebefec;"">
+		<nav class="navbar fixed-top navbar-light" style="background-color: #ebefec;">
 			<div class="container">
 			<div class="nav">
 	 	 		<a class="navbar-brand" href="/">
@@ -27,10 +29,10 @@
 				    <a class="nav-link" href="/questions">All Question</a>
 				  </li>
 				  <% if logged_in? %>
-				  	<li class="nav-item">
-				    	<a class="nav-link" href="/questions/new">Ask A Question</a>
-				  	</li>
-					<% end %>
+				  	  <li class="nav-item">
+				      	<a class="nav-link" href="/questions/new">Ask A Question</a>
+				  	  </li>
+			  	  <% end %>
 				</ul>
 				</div>
 
@@ -52,12 +54,12 @@
 				  	<li class="nav-item dropdown">
 				    	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"">Sign In</a>
 					    <div class="dropdown-menu dropdown-right" style="padding: 0; min-width: 12rem;">
-					      <form id="sign-in-form" method="post" action="/users/signin" style="margin-bottom: 0;"">
+					        <form id="sign-in-form" method="post" action="/users/signin" style="margin-bottom: 0;"">
 							    <input class="form-control" type=text placeholder="Email" name="email">
 							    <input class="form-control" type=password placeholder="Password" name="password">
 							    <button class="btn btn-outline-primary btn-block my-sm-0" type="submit">Sign In</button>
-								</form>
-								<p style="margin: 0;" id="error"></p>
+							</form>
+							<p style="margin: 0;" id="error"></p>
 					    </div>
 						</li>	
 				  <% else %>	
@@ -75,6 +77,29 @@
 				</ul>
   			</div>
 		</nav>
+
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="false">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			       <form id="modal-sign-in-form" method="post" action="/users/signin">
+					    <input class="form-control" type=text placeholder="Email" name="email">
+					    <input class="form-control" type=password placeholder="Password" name="password">
+					   </form>
+             <p style="margin: 0;" id="error"></p>
+			      </div>
+			      <div class="modal-footer">
+				      <button class="btn btn-outline-primary btn-block my-sm-0" type="submit"form="modal-sign-in-form">Sign In</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		<div class="container">
 			<%= yield %>
 		</div>

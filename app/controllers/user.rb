@@ -1,5 +1,4 @@
 ### User
-require 'byebug'
 
 get '/users/new' do
     erb :"users/signup"

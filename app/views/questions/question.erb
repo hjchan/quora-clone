@@ -17,6 +17,7 @@
       <% else %>
 	      <% q_vote = false %>
       <% end %>
+      <% if logged_in? %>
 			<div class="w-100"></div>
 			<div class="col col-md-auto card <%="border-primary" if (q_vote) && (q_vote.upvote)%>">
 				<div class="row vote-button">
@@ -43,10 +44,13 @@
 		      </div>
 	      </div>
     	</div>
+    	<% end %>
 		</div>
 	</div>
 </div>
 <div style="height:20px; width:100%; clear:both;"></div>
+
+<% if logged_in? %>
 
 <form method="post" action="/questions/<%= @question.id %>/answers">
 	<div class="card">
@@ -57,6 +61,8 @@
 	</div>
 </form>
 <div style="height:20px; width:100%; clear:both;"></div>
+
+<% end %>
 
 <h5><%=@question.answers.count %> Answers </h5>
 <hr/>
@@ -79,6 +85,7 @@
     <% else %>
       <% a_vote = false %>
     <% end %>
+    <% if logged_in? %>
 		<div class="row answer-vote-row">
 			<div class="col col-md-auto card <%="border-primary" if (a_vote) && (a_vote.upvote)%>">
 				<div class="row vote-button">
@@ -106,6 +113,7 @@
 	      </div>
     	</div>
   	</div>
+  	<% end %>
 		<div style="height:5px; width:100%; clear:both;"></div>
 		<hr/>
 	<% end %>

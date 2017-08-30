@@ -1,7 +1,5 @@
 ##Answer
-require 'byebug'
-
-post '/answers/:id/upvote/:bool' do
+  post '/answers/:id/upvote/:bool' do
   a_vote = AnswerVote.find_by(user_id: current_user.id, answer_id: params[:id])
   if params[:bool] == 'false'
     a_vote.update(upvote: false)

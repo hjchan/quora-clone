@@ -1,5 +1,6 @@
 function verify(e){
   e.preventDefault();
+  $p = $(this).next()
   $.ajax({
     url: $(this).attr('action'),
     method: $(this).attr('method'),
@@ -8,10 +9,31 @@ function verify(e){
     success: function(data){
       console.log(data);
       if (data.success){
-        $('#error').html('');
+        $p.html('');
         window.location.href = data.url;
       }else{
-        $('#error').html(data.msg);
+        $p.html(data.msg);
+      }
+    }
+  });
+}
+
+function verifyModal(e){
+  e.preventDefault();
+  $p = $(this).next()
+  $.ajax({
+    url: $(this).attr('action'),
+    method: $(this).attr('method'),
+    data: $(this).serialize(),
+    dataType: 'json',
+    success: function(data){
+      console.log(data);
+      if (data.success){
+        $p.html('');
+        $('#loginModal').modal('hide')
+        window.location.href = data.url;
+      }else{
+        $p.html(data.msg);
       }
     }
   });
@@ -129,6 +151,7 @@ function expand(e){
 
 $(document).ready(function(){
   console.log("jQuery Ready");
+  $('#modal-sign-in-form').on("submit", verifyModal);
   $('#sign-in-form').on("submit", verify);
   $('#sign-up-form').on("submit", verify);
   $('.upvote').click(upvote)

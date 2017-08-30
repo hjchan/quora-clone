@@ -3,6 +3,8 @@
 	<hr/>
 <% end %>
 <% if @questions %>
+	<h6 align="right"><%= page_entries_info @questions %></h6>
+	<div style="height:10px; width:100%; clear:both;"></div>
 	<% @questions.each do |q| %>
 		<div class="card">
 			<div class="card-header">
@@ -17,7 +19,14 @@
 						<h6 class="card-subtitle mb-2 text-muted">Posted by: <a href="/users/<%= User.find(q.user_id).id %>"><%= User.find(q.user_id).full_name %></a></h6>
 					</div>
 					<div class="w-100"></div>
-		      <p> <%= q.question_details %> </p>
+		      <p>
+		      	<% if q.question_details.size > 100 %>
+			      	<%= q.question_details.slice(0..99) %><br/>
+			      	<a href="#" class="question-more" data-detail="<%=q.question_details%>">more..</a>
+		      	<% else %>
+		      		<%= q.question_details %> 
+	      		<% end %>
+		      </p>
 		      <% if logged_in? %>
 			      <% q_vote = QuestionVote.find_by(question_id: q.id, user_id: current_user.id) %> 
 		      <% else %>
@@ -54,4 +63,7 @@
 		</div>
 		<div style="height:20px; width:100%; clear:both;"></div>
 	<% end %>
+	<div class="apple_pagination">
+		<%= will_paginate @questions, :style => "float: right" %>
+	</div>
 <% end %>

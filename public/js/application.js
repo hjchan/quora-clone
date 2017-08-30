@@ -121,6 +121,12 @@ function ansDownvote(e){
   });
 }
 
+function expand(e){
+  e.preventDefault()
+  target = $(e.target)
+  target.parent().html(target.data('detail'))
+}
+
 $(document).ready(function(){
   console.log("jQuery Ready");
   $('#sign-in-form').on("submit", verify);
@@ -129,6 +135,7 @@ $(document).ready(function(){
   $('.downvote').click(downvote)
   $('.a-upvote').click(ansUpvote)
   $('.a-downvote').click(ansDownvote)
+  $('.question-more').click(expand)
 })
 
 // new Socket

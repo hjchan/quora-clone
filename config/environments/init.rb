@@ -20,6 +20,10 @@ require "sinatra/reloader" if development?
 	# embedded ruby
 require 'erb'
 require 'uri'
+
+  #paginate
+require 'will_paginate'
+require 'will_paginate/active_record' 
 ######################################################################
 
 
@@ -51,4 +55,7 @@ Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
 
 # Setup controller (C)
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
+
+#paginate
+WillPaginate.per_page = 10
 ######################################################################

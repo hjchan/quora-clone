@@ -1,4 +1,4 @@
 get '/' do
-	@questions = Question.all
-  	erb :"static/index"
+  @questions = Question.paginate(page: params[:page])
+ 	erb :"static/index"
 end

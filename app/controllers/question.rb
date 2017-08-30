@@ -3,7 +3,7 @@
 require 'byebug'
 
 get '/questions' do
-  @questions = Question.all
+  @questions = Question.paginate(page: params[:page])
   erb :"questions/index"
 end
 

@@ -10,8 +10,6 @@
 		<link rel="stylesheet" href="/css/application.css">
 		<script type="text/javascript" src="/js/application.js"></script>
 		<title>Sinatra Framework</title>
-			<script type="text/javascript">$('#loginModal').modal('show');</script>
-			<script>$('#loginModal').modal('show')</script>
 	</head>
 
 	<body>
@@ -100,7 +98,11 @@
 			    </div>
 			  </div>
 			</div>
+			<% if !(logged_in?) %>
+				<script>$('#loginModal').modal('show')</script>
+			<% end  %>
 		<div class="container">
+
 			<%= yield %>
 		</div>
 	</body>

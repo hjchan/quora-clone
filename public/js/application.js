@@ -18,27 +18,6 @@ function verify(e){
   });
 }
 
-function verifyModal(e){
-  e.preventDefault();
-  $p = $(this).next()
-  $.ajax({
-    url: $(this).attr('action'),
-    method: $(this).attr('method'),
-    data: $(this).serialize(),
-    dataType: 'json',
-    success: function(data){
-      console.log(data);
-      if (data.success){
-        $p.html('');
-        $('#loginModal').modal('hide')
-        window.location.href = data.url;
-      }else{
-        $p.html(data.msg);
-      }
-    }
-  });
-}
-
 function upvote(e){
   e.preventDefault();
   var id = e.target.getAttribute('data-qid')
@@ -149,16 +128,29 @@ function expand(e){
   target.parent().html(target.data('detail'))
 }
 
+function switchSignUp(){
+  $('#loginModal').modal('hide')
+  $('#signupModal').modal('show')
+}
+
+function switchSignIn(){
+  $('#signupModal').modal('hide')
+  $('#loginModal').modal('show')
+}
+
 $(document).ready(function(){
   console.log("jQuery Ready");
-  $('#modal-sign-in-form').on("submit", verifyModal);
+  $('#modal-sign-in-form').on("submit", verify);
+  $('#modal-sign-up-form').on("submit", verify);
+  $('#switch-sign-up').click(switchSignUp);
+  $('#switch-sign-in').click(switchSignIn);
   $('#sign-in-form').on("submit", verify);
   $('#sign-up-form').on("submit", verify);
-  $('.upvote').click(upvote)
-  $('.downvote').click(downvote)
-  $('.a-upvote').click(ansUpvote)
-  $('.a-downvote').click(ansDownvote)
-  $('.question-more').click(expand)
+  $('.upvote').click(upvote);
+  $('.downvote').click(downvote);
+  $('.a-upvote').click(ansUpvote);
+  $('.a-downvote').click(ansDownvote);
+  $('.question-more').click(expand);
 })
 
 // new Socket

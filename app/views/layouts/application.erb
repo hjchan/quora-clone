@@ -77,30 +77,56 @@
 		</nav>
 
 		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="false">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="loginModalLabel">Login</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			       <form id="modal-sign-in-form" method="post" action="/users/signin">
-					    <input class="form-control" type=text placeholder="Email" name="email">
-					    <input class="form-control" type=password placeholder="Password" name="password">
-					   </form>
-             <p style="margin: 0;" id="error"></p>
-			      </div>
-			      <div class="modal-footer">
-				      <button class="btn btn-outline-primary btn-block my-sm-0" type="submit"form="modal-sign-in-form">Sign In</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<% if !(logged_in?) %>
-				<script>$('#loginModal').modal('show')</script>
-			<% end  %>
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		       <form id="modal-sign-in-form" method="post" action="/users/signin">
+				    <input class="form-control" type=text placeholder="Email" name="email">
+				    <input class="form-control" type=password placeholder="Password" name="password">
+				   </form>
+         		<p style="margin: 0;" id="error"></p>
+         		<p style="margin: 0">Not a user? <a href="#" id="switch-sign-up"> Sign Up Now! </a></p>
+		      </div>
+		      <div class="modal-footer">
+			      <button class="btn btn-outline-primary btn-block my-sm-0" type="submit"form="modal-sign-in-form">Sign In</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+           <form id="modal-sign-up-form" method="post" action="/users/new">
+            <input class="form-control" type=text placeholder="Full Name" name="user[full_name]">
+            <input class="form-control" type=text placeholder="Email" name="user[email]">
+            <input class="form-control" type=password placeholder="Password" name="user[password]">
+            <input class="form-control" type=password placeholder="Confirmed Password" name="user[password_confirmation]">
+           </form>
+            <p style="margin: 0;" id="error"></p>
+            <p style="margin: 0">Already a user? <a href="#" id="switch-sign-in"> Sign In! </a></p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-primary btn-block my-sm-0" type="submit"form="modal-sign-up-form">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+		<% if !(logged_in?) %>
+			<script>$('#loginModal').modal('show')</script>
+		<% end  %>
 		<div class="container">
 
 			<%= yield %>

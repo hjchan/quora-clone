@@ -10,7 +10,67 @@
 <% if !(@questions.empty?) %>
 	<h5> Submitted Question </h5>
 	<div style="height:20px; width:100%; clear:both;"></div>
-	<%= erb :"questions/index", layout: false %>
+	<div style="height:10px; width:100%; clear:both;"></div>
+	<% @questions.each do |q| %>
+		<div class="card">
+			<div class="card-header">
+				<h5 class="card-title"><a href="/questions/<%= q.id %>" ><%= q.title %> </a></h5>
+			</div>
+			<div class="card-body">
+				<div class="row question-body">
+					<div class="col">
+						<h6 class="card-subtitle mb-2 text-muted">Category: <a href="questions/category/<%=q.category%>" ><%= q.category %> </a></h6>
+					</div>
+					<div class="col">
+						<h6 class="card-subtitle mb-2 text-muted">Posted by: <a href="/users/<%= User.find(q.user_id).id %>"><%= User.find(q.user_id).full_name %></a></h6>
+					</div>
+					<div class="w-100"></div>
+		      <p>
+		      	<% if q.question_details.size > 100 %>
+			      	<%= q.question_details.slice(0..99) %><br/>
+			      	<a href="#" class="question-more" data-detail="<%=q.question_details%>">more..</a>
+		      	<% else %>
+		      		<%= q.question_details %> 
+	      		<% end %>
+		      </p>
+		      <% if logged_in? %>
+			      <% q_vote = QuestionVote.find_by(question_id: q.id, user_id: current_user.id) %> 
+		      <% else %>
+			      <% q_vote = false %>
+		      <% end %>
+		      <% if logged_in? %>
+				<div class="w-100"></div>
+					<div class="col col-md-auto card <%="border-primary" if (q_vote) && (q_vote.upvote)%>">
+						<div class="row vote-button">
+							<div class="col">
+								<a class="upvote" href="#">
+					      	<img id="vote-img" src="/img/like.svg" data-qid="<%= q.id %>" width="25" height="25" role="button" aria-pressed="<%=q_vote.upvote if q_vote%>">
+					      </a>
+				      </div>
+				      <div class="col">
+					      <h4 id="upvote-count-<%=q.id%>"><%= QuestionVote.where(question_id: q.id, upvote: true).count %></h4>
+				      </div>
+			      </div>
+		      </div>
+
+		      <div class="col col-md-auto card <%="border-primary" if (q_vote) && (q_vote.downvote)%>">
+						<div class="row vote-button">
+							<div class="col">
+								<a class="downvote" href="#">
+					      	<img id="vote-img" src="/img/dislike.svg" data-qid="<%= q.id %>" width="25" height="25" role="button" aria-pressed="<%=q_vote.downvote if q_vote%>">
+					      </a>
+				      </div>
+				      <div class="col">
+					      <h4 id="downvote-count-<%=q.id%>"><%= QuestionVote.where(question_id: q.id, downvote: true).count %></h4>
+				      </div>
+			      </div>
+	      	</div>
+	      	<% end %>	
+			</div>
+			</div>
+		</div>
+		<div style="height:20px; width:100%; clear:both;"></div>
+	<% end %>
 <% end %>
 
 <div style="height:20px; width:100%; clear:both;"></div>
